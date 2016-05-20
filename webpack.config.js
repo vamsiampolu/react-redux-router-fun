@@ -1,0 +1,39 @@
+var webpack = require('webpack');
+module.exports = {
+  entry:'./src/app.js',
+  output:{
+	  filename:'bundle.js',
+	  path:'./build'
+  },
+  module:{
+	  preLoaders:[
+		  {
+			  test:/\.js$/,
+			  exclude:['node_modules','build'],
+			  loader:'eslint-loader'
+		  }
+	  ],
+	  loaders:[
+		  {
+			  test:/\.js$/,
+			  exclude:['node_modules','build'],
+			  loader:'babel'
+		  }
+	  ]
+  },
+  devtool:'cheap-module-eval-source-map',
+  devServer:{
+	  hot:true,
+	  inline:true,
+	  port:3000,
+	  host:'localhost',
+	  contentBase:'./build',
+	  historyApiFallback:true,
+	  colors:true,
+	  progress:true,
+	  stats:'errors-only'
+  },
+  plugins:[
+    new webpack.HotModuleReplacementPlugin()
+  ]
+};
